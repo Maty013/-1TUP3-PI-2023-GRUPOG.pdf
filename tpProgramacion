@@ -1,0 +1,56 @@
+Proceso TpProgramacion
+	Definir pacientes Como Entero
+	Definir turnos Como Entero
+	definir vacunas Como Caracter
+	definir opciones Como Entero 
+	
+	Escribir "bienvenido al sistema de gestion de turnos"
+	Escribir "------------------------------------------"
+	Escribir "seleccione una de las siguientes opciones"
+	Escribir " "
+	Escribir "1-Reservar turno"
+	Escribir "2-buscar paciente"
+	Escribir "3-Ver agenda vacunatorio"
+	Escribir "4-ordenar y mostrar lista de pacientes"
+	Escribir "      a. Por edad"
+	Escribir "      b. Por vacuna a aplicar"
+	Escribir "6-Listado/s"
+	Escribir "      a. Cantidad de turnos otorgados por dia"
+	Escribir "      b. Cantidad de vacunas a aplicar por vacuna"
+	leer opciones 
+	segun opciones Hacer
+		1:
+			reservaTurno(pacientes)
+		2:
+			buscarPaciente(pacientes)
+		3:
+			agendaVacunatorio(turnos)
+		4:  
+			ordenarYmostrar(pacientes)
+		5:
+			listados(turnos)
+		De Otro Modo:
+			Escribir "Ingrese una de las opciones validas"
+	Fin Segun
+	
+	
+FinProceso
+
+SubProceso reservaTurno(pacientes)
+	
+	
+Finsubproceso
+SubProceso buscarPaciente(pacientes)
+	
+FinSubProceso
+SubProceso agendavacunatorio(turnos)
+	
+	
+FinSubProceso
+SubProceso ordenarYmostrar(pacientes)	
+	
+FinSubProceso
+SubProceso listados(turnos)
+	
+FinSubProceso
+	
