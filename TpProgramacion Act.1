@@ -1,0 +1,185 @@
+Proceso TpProgramacion
+	Definir AgendaDeTurnos Como caracter
+	Definir diasSemana Como caracter
+	definir horariosTurnos como caracter
+	definir StockVacunas Como entero
+	definir Vacunas como caracter 
+	definir opciones Como Entero 
+	definir CantidadDeTurnos como entero 
+	definir Turnos Como Caracter
+	CantidadDeTurnos = 0
+	
+	Dimension StockVacunas[6]   // Cantidad de las vacunas disponibles
+ 	StockVacunas[0] <- 10 //Neumococo conjugada
+	StockVacunas[1] <- 10 //Poliomelitis  (IPV o Salk
+	StockVacunas[2] <-10 //Quintuple o pentavalente
+	StockVacunas[3] <-10 //Rotavirus 
+	StockVacunas[4] <-10 //Meningococo
+	StockVacunas[5] <-10 //Triple Viral
+	dimension Vacunas[6]
+	Vacunas[0] <-"Neumococo conjugada"
+	Vacunas[1] <-"Poliomelitis  (IPV o Salk"
+	Vacunas[2] <-"Quintuple o pentavalente"
+	Vacunas[3] <-"Rotavirus "
+	Vacunas[4] <-"Meningococo"
+	Vacunas[5] <-"Triple Viral"
+ 	Dimension DiasSemana[5]
+	diasSemana[0] <-"lunes"
+	diasSemana[1] <-"Martes"
+	diasSemana[2] <-"Miercoles"
+	diasSemana[3] <-"Jueves"
+	diasSemana[4] <-"Viernes"
+	Dimension horariosTurnos[8]
+	horariosTurnos[0] <-"8:00"
+	horariosTurnos[1] <-"8:30"
+	horariosTurnos[2] <-"9:00"
+	horariosTurnos[3] <-"9:30"
+	horariosTurnos[4] <-"10:00"
+	horariosTurnos[5] <-"10:30"
+	horariosTurnos[6] <-"11:00"
+	horariosTurnos[7] <-"11:30"
+	dimension Turnos[5,8]
+	
+
+	Dimension AgendaDeTurnos[40,6] //Necesitamos poner 2 array para saber que turnos estan disponibles y para luego poder mostrar la Agenda, 40 son la cantidad de turnos posibles
+	// y 6 los datos que necesitamos de cada uno de esos turnos 
+	// 0: nombre y apellido ,1: DNI, 2: Edad, 3: Vacuna a aplicar, 3:Dia del turno, 4:horario del turno 5: Vacuna a aplicar
+	
+	Escribir "bienvenido al sistema de gestion de turnos"
+	Escribir "------------------------------------------"
+	Escribir "seleccione una de las siguientes opciones"
+	Escribir " "
+	Escribir "1-Reservar turno"
+	Escribir "2-buscar paciente"
+	Escribir "3-Ver agenda vacunatorio"
+	Escribir "4-ordenar y mostrar lista de pacientes"
+	Escribir "      a. Por edad"
+	Escribir "      b. Por vacuna a aplicar"
+	Escribir "5-Listado/s"
+	Escribir "      a. Cantidad de turnos otorgados por dia"
+	Escribir "      b. Cantidad de vacunas a aplicar por vacuna"
+	escribir "6-Para salir del programa"
+	Escribir ""
+	leer opciones 
+	
+	Repetir
+		segun opciones Hacer
+			1:
+				reservarTurno(AgendaDeTurnos, diasSemana, horariosTurnos, Vacunas, StockVacunas, CantidadDeTurnos, Turnos)
+			2:
+				buscarPaciente(pacientes)
+			3:
+				agendaVacunatorio(turnos)
+			4:  
+				ordenarYmostrar(pacientes)
+			5:
+				listados(turnos)
+			6:
+				escribir "hasta luego"
+			De Otro Modo:
+				Escribir "Ingrese una de las opciones validas"
+		Fin Segun
+	Mientras Que opciones = 6
+	
+FinProceso
+
+SubProceso reservarTurno(AgendaDeTurnos Por Referencia, diasSemana Por Referencia, horariosTurnos Por Referencia, Vacunas, StockVacunas Por Referencia, CantidadDeTurnos Por Referencia, Turnos Por Referencia)
+	definir i, j como entero 
+	definir Validador como entero 
+	definir dia, horario, vacuna como entero 
+	definir DNI, EDAD como caracter 
+	
+	
+	Escribir "Turnos disponibles:"
+	para i<-0 hasta 4 con paso 1 Hacer
+		Escribir "Turnos disponibles ", diasSemana[i], ":"	
+		para j<-0 hasta 7 con paso 1 Hacer
+			si Turnos[i,j] = "" Entonces
+				Escribir j+1, ". " horariosTurnos[j]
+			FinSi
+		FinPara
+		escribir ""
+	FinPara
+	
+	Repetir
+		Escribir "Ingrese el dia y horario del turno a reservar( por ejemplo 3 4)"
+		leer dia, horario
+		dia = dia-1  
+		horario = horario -1 
+		
+		si turnos[dia,horario] <> "" entonces 
+			escribir "El turno seleccionado ya esta ocupado"
+			Escribir "por favor a continuacion selecione un horario disponible"
+			escribir ""
+			validador = 0
+		sino 
+			validador = 1
+		FinSi
+	Mientras Que Validador = 0
+	
+	escribir "Ingrese los datos del paciente:"
+	escribir "Nombre y Apellido:"
+	leer AgendaDeTurnos[CantidadDeTurnos,0]
+	Repetir
+		Escribir "Dni:"
+		leer DNI
+	Mientras Que longitud(DNI) >8 o longitud(DNI) < 6
+	AgendaDeTurnos[CantidadDeTurnos,1] = DNI
+	repetir
+		Escribir "Edad:"
+		leer EDAD
+	Mientras Que Longitud(EDAD) >= 3
+	AgendaDeTurnos[CantidadDeTurnos,2] = EDAD
+	
+	escribir "Vacunas Disponibles:"
+	para i<-0 hasta 5 con paso 1 Hacer
+		si StockVacunas[i] > 0 Entonces
+			escribir i+1 ". ", Vacunas[i]
+		FinSi
+	FinPara
+	
+	escribir "selecione la vacuna a aplicar:"
+	leer vacuna
+	vacuna = vacuna -1
+	
+	mientras vacuna<0 o vacuna>5 o StockVacunas[vacuna] = 0
+		escribir "la vacuna selecionada no esta disponible"
+		Escribir "por favor selecione una disponible"
+		leer vacuna
+		vacuna = vacuna -1
+	FinMientras
+	
+	AgendaDeTurnos[CantidadDeTurnos,3] = diasSemana[dia]
+	AgendaDeTurnos[CantidadDeTurnos,4] = horariosTurnos[horario]
+	AgendaDeTurnos[CantidadDeTurnos,5] = Vacunas[vacuna]
+	
+	
+	StockVacunas[vacuna] = StockVacunas[vacuna] -1 
+	
+	Escribir ""
+	escribir "Resumen De la reserva"
+	escribir "Nombre y Apellido:",AgendaDeTurnos[CantidadDeTurnos,0]
+	escribir "DNI:", AgendaDeTurnos[CantidadDeTurnos,1]
+	escribir "Edad:", AgendaDeTurnos[CantidadDeTurnos,2]
+	escribir "Vacuna:", AgendaDeTurnos[CantidadDeTurnos,5]
+	escribir "Dia:", AgendaDeTurnos[CantidadDeTurnos,3]
+	escribir "Horario:", AgendaDeTurnos[CantidadDeTurnos,4]
+	escribir ""
+	
+	CantidadDeTurnos = CantidadDeTurnos +1
+
+Finsubproceso
+SubProceso buscarPaciente(pacientes)
+	
+FinSubProceso
+SubProceso agendavacunatorio(turnos)
+	
+	
+FinSubProceso
+SubProceso ordenarYmostrar(pacientes)	
+	
+FinSubProceso
+SubProceso listados(turnos)
+	
+FinSubProceso
+	
