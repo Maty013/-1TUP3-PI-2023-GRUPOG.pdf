@@ -1,6 +1,5 @@
 //lo probe y puse unos comentarios con lo que falta y lo que me dio error y donde 
 
-
 Proceso TpProgramacion
 	Definir AgendaDeTurnos Como caracter
 	Definir diasSemana Como caracter
@@ -10,6 +9,7 @@ Proceso TpProgramacion
 	definir opciones Como Entero 
 	definir CantidadDeTurnos como entero 
 	definir Turnos Como Caracter
+	Definir age Como Entero
 	CantidadDeTurnos = 0
 	
 	Dimension StockVacunas[6]   // Cantidad de las vacunas disponibles
@@ -72,11 +72,11 @@ Proceso TpProgramacion
 			2:
 				buscarPaciente(AgendaDeTurnos,CantidadDeTurnos)
 			3:
-				agendaVacunatorio(turnos)
+				agendaVacunatorio(turnos, horariosTurnos, agendaDeTurnos, diasSemana)
 			4:  
-				ordenarYmostrar(pacientes)
+				ordenarYmostrar(pacientes, age)
 			5:
-				listados(turnos)
+				listados(turnos, agendaDeTurnos, DiasSemanas, vacunas, turnos)
 			6:
 				escribir "hasta luego"
 			De Otro Modo:
@@ -202,13 +202,14 @@ SubProceso buscarPaciente(AgendaDeTurnos Por Referencia,CantidadDeTurnos Por Ref
 	Mientras Que seguir = "si"
 	
 FinSubProceso
-SubProceso agendavacunatorio(turnos)
+SubProceso agendavacunatorio(turnos, horariosTurnos, agendaDeTurnos, diasSemana)
 	
 	
 FinSubProceso
-SubProceso ordenarYmostrar(pacientes)	
+SubProceso ordenarYmostrar(pacientes, age)	
 	
 FinSubProceso
-SubProceso listados(turnos)
+SubProceso listados(turnos, horariosTurnos, agendaDeTurnos, diasSemana)
 	
 FinSubProceso
+	
